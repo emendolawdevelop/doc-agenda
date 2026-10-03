@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diagramas · Flujo de Agenda</title>
+<meta name="description" content="Los pasos del flujo de agenda dibujados como diagramas: vista rápida, quién hace qué, estados del caso y de la cita, e imprevistos.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Keyla Bullón Zaragoza">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1c1e" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Diagramas · Flujo de Agenda">
+<meta property="og:description" content="Los pasos del flujo de agenda dibujados como diagramas: vista rápida, quién hace qué, estados del caso y de la cita, e imprevistos.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;600&display=swap">
+<style>
+  /* KBZ · Fundamentos visuales v1.0 — blanco o tinta, neutros acromáticos, orquídea solo para lo que se pulsa.
+     Big Shoulders Display (sustituto libre declarado de Agency FB) · Poppins · Cascadia Code. Plano: sin sombras. */
+  :root {
+    --bg:#ffffff;--surface:#ffffff;--fg:#000000;--text:#1c1c1e;--muted:#5a5a5e;--faint:#8e8e93;
+    --line:#e0e0e2;--line-2:#c9c9cc;--strong:#000000;--chip:#ebebec;--soft:#f5f5f6;
+    --solid:#000000;--solid-ink:#ffffff;--solid-hover:#2a2a2c;--mid:#5a5a5e;--mid-ink:#ffffff;
+    --accent:#955793;--accent-solid:#ad69af;--success:#3d9c5e;--danger:#cb4644;
+    --font-display:"Big Shoulders Display","Agency FB","Arial Narrow",sans-serif;
+    --font-body:"Poppins",system-ui,sans-serif;
+    --font-mono:"Cascadia Code",ui-monospace,"SFMono-Regular",Menlo,monospace;
+    --ease:cubic-bezier(0.2,0,0.2,1);--dur-instant:80ms;--dur-fast:140ms;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#1c1c1e;--surface:#1c1c1e;--fg:#eaeaea;--text:#eaeaea;--muted:#a1a1a6;--faint:#8e8e93;
+      --line:#3f3f40;--line-2:#5a5a5e;--strong:#eaeaea;--chip:#2a2a2c;--soft:#2a2a2c;
+      --solid:#eaeaea;--solid-ink:#1c1c1e;--solid-hover:#c9c9cc;--mid:#a1a1a6;--mid-ink:#1c1c1e;
+      --accent:#d495d1;--accent-solid:#d495d1;--success:#5fbf80;--danger:#e2706e;color-scheme:dark; } }
+  :root[data-theme="dark"] { --bg:#1c1c1e;--surface:#1c1c1e;--fg:#eaeaea;--text:#eaeaea;--muted:#a1a1a6;--faint:#8e8e93;
+      --line:#3f3f40;--line-2:#5a5a5e;--strong:#eaeaea;--chip:#2a2a2c;--soft:#2a2a2c;
+      --solid:#eaeaea;--solid-ink:#1c1c1e;--solid-hover:#c9c9cc;--mid:#a1a1a6;--mid-ink:#1c1c1e;
+      --accent:#d495d1;--accent-solid:#d495d1;--success:#5fbf80;--danger:#e2706e;color-scheme:dark; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:0.9375rem; line-height:1.62; padding-inline:16px; padding-block:72px 0; }
+  a { color:var(--accent); text-decoration:none; transition:color var(--dur-fast) var(--ease); }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--accent-solid); outline-offset:2px; border-radius:2px; }
+  .chev { width:0.5625em; height:1em; fill:currentColor; flex:none; vertical-align:-0.12em; }
+  .mark { display:inline-block; padding:10px; margin:-10px 0 40px -10px; }
+  .logo { display:block; width:76px; height:38.4px; background:var(--fg); -webkit-mask:url(/assets/kbz-monograma.png) center/contain no-repeat; mask:url(/assets/kbz-monograma.png) center/contain no-repeat; }
+  .eyebrow { display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:0.9375rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin:0 0 6px; }
+  .eyebrow .chev { width:7px; height:12px; vertical-align:0; color:var(--fg); }
+  h1 { font-family:var(--font-display); font-weight:800; font-size:clamp(2.5rem,8vw,3.25rem); line-height:1.04; text-transform:uppercase; color:var(--fg); margin:0 0 4px; text-wrap:balance; }
+  .meta { font-family:var(--font-mono); font-size:0.75rem; color:var(--muted); margin:14px 0 0; }
+  .head-rule { border:0; border-top:3px solid var(--strong); margin:28px 0 0; }
+  .softlink { display:inline-flex; align-items:center; gap:6px; font-weight:500; }
+  .softlink .chev { width:7px; height:12px; vertical-align:0; transition:transform var(--dur-fast) var(--ease); }
+  .softlink:hover .chev { transform:translateX(2px); }
+  .softlink.back:hover .chev { transform:translateX(-2px); }
+  .tagset { display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none; }
+  .draft { margin-top:64px; padding:16px 18px; border:1px dashed var(--line-2); border-radius:2px; color:var(--muted); font-size:0.875rem; }
+  .draft b { display:block; font-family:var(--font-display); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg); font-size:0.9375rem; margin-bottom:2px; }
+  .signbar { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-top:48px; padding:14px 0 20px; border-top:1px solid var(--line); font-family:var(--font-display); font-weight:700; font-size:0.875rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); }
+  .signbar .wm { display:block; width:133px; height:18px; background:var(--fg); -webkit-mask:url(/assets/kbz-wordmark.png) center/contain no-repeat; mask:url(/assets/kbz-wordmark.png) center/contain no-repeat; }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+  .wrap { max-width:880px; margin-inline:auto; }
+  .topnav { margin-bottom:8px; }
+  .lead { margin:14px 0 0; max-width:62ch; }
+  .toc { margin-top:24px; }
+  .toc a { display:block; font-family:var(--font-display); font-weight:700; font-size:0.875rem; line-height:1; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg); border:1px solid var(--line-2); border-radius:2px; padding:8px 10px 7px; transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease); }
+  .toc a:hover { background:var(--solid); color:var(--solid-ink); border-color:var(--solid); }
+  .toc a .n { font-family:var(--font-mono); font-weight:600; letter-spacing:0; margin-right:6px; }
+  section.diagram { margin-top:72px; scroll-margin-top:16px; }
+  section.diagram h2 { display:flex; align-items:baseline; gap:12px; font-family:var(--font-display); font-weight:800; font-size:clamp(1.6rem,5vw,2.25rem); line-height:1.04; text-transform:uppercase; color:var(--fg); margin:0; padding-bottom:10px; border-bottom:3px solid var(--strong); }
+  section.diagram h2 .idx { font-family:var(--font-mono); font-size:0.875rem; font-weight:600; }
+  section.diagram > p { margin:10px 0 16px; max-width:64ch; }
+  .panel { background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:20px; overflow-x:auto; }
+  .panel pre.mermaid { margin:0; display:flex; justify-content:center; min-width:min-content; }
+  .note { margin-top:12px; padding:2px 0 2px 16px; border-left:3px solid var(--strong); font-size:0.875rem; }
+  .note strong { font-family:var(--font-display); font-weight:700; font-size:0.9375rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg); margin-right:4px; }
+  .tablewrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+  th, td { text-align:left; vertical-align:top; padding:12px 14px 12px 0; border-bottom:1px solid var(--line); }
+  thead th { font-family:var(--font-display); font-weight:700; font-size:0.9375rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg); border-bottom:2px solid var(--strong); }
+  td:first-child { font-weight:600; color:var(--fg); min-width:190px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="mark" href="https://www.keylabullon.com" aria-label="Keyla Bullón Zaragoza"><span class="logo" role="img" aria-label="Monograma KBZ"></span></a>
+  <nav class="topnav" aria-label="Navegación">
+    <a class="softlink back" href="/"><svg class="chev" viewBox="0 0 9 16" aria-hidden="true"><polygon points="9,0 5.6,0 0,8 5.6,16 9,16 3.4,8"/></svg> volver al flujo paso a paso</a>
+  </nav>
+
+  <p class="eyebrow"><svg class="chev" viewBox="0 0 9 16" aria-hidden="true"><polygon points="9,0 5.6,0 0,8 5.6,16 9,16 3.4,8"/></svg>Propuesta · Emendo Law</p>
+  <h1>Diagramas del flujo de agenda</h1>
+  <p class="lead">Los mismos pasos de la página anterior, dibujados de cuatro formas, más una tabla de imprevistos. Reflejan el flujo actualizado: al aprobar un caso la cita queda Confirmada, y usted no registra nada a mano.</p>
+  <p class="meta">Keyla Bullón Zaragoza · Octubre 2026 · borrador</p>
+
+  <ul class="toc tagset">
+    <li><a href="#vista-rapida"><span class="n">01</span>Vista rápida</a></li>
+    <li><a href="#quien-hace-que"><span class="n">02</span>Quién hace qué</a></li>
+    <li><a href="#estados-caso"><span class="n">03</span>Estados del caso</a></li>
+    <li><a href="#estado-cita"><span class="n">04</span>Estado de la cita</a></li>
+    <li><a href="#imprevistos"><span class="n">05</span>Imprevistos</a></li>
+  </ul>
+
+  <section class="diagram" id="vista-rapida">
+    <h2><span class="idx">01</span>Vista rápida</h2>
+    <p>El camino completo en una sola mirada, con las dos decisiones que usted toma: aprobar el caso y, al final, llevarlo o no.</p>
+    <div class="panel">
+<pre class="mermaid">
+flowchart TD
+    A(["Cliente llena el cuestionario y acepta el aviso de privacidad"]) --> B["Sistema guarda el caso y envía los correos"]
+    B --> C["Usted revisa el caso"]
+    C --> D{"¿Aprueba?"}
+    D -- "Sí" --> E["Se libera la agenda y el caso queda Confirmada"]
+    D -- "No" --> L["Caso Omitido, no se envía agenda"]
+    E --> F["Cliente recibe el enlace y elige día y hora en Google"]
+    F --> G["Videollamada de conocimiento inicial"]
+    G --> H["Usted marca la cita como Completada"]
+    H --> I{"¿El despacho lleva el caso?"}
+    I -- "Sí" --> J[["Etapa futura: se envía a PracticePanther"]]
+    I -- "No" --> K(["Fin"])
+    L --> K
+    J --> K
+</pre>
+    </div>
+  </section>
+
+  <section class="diagram" id="quien-hace-que">
+    <h2><span class="idx">02</span>Quién hace qué</h2>
+    <p>Cada columna es una persona o sistema. Las flechas muestran quién le avisa o le envía algo a quién, de arriba hacia abajo.</p>
+    <div class="panel">
+<pre class="mermaid">
+sequenceDiagram
+    autonumber
+    actor C as Cliente
+    participant S as Sistema
+    actor A as Usted
+    participant G as Google Calendar
+    participant P as PracticePanther
+    C->>S: Llena el cuestionario y acepta el aviso de privacidad
+    S->>A: Correo con resumen, jurisdicción y botones Aprobar y Omitir
+    S->>C: Correo de confirmación de recepción
+    A->>A: Revisa el caso
+    alt Usted aprueba
+        A->>S: Aprobar, desde el correo o desde el panel
+        S->>S: Libera la agenda, caso Confirmada
+        S->>C: Correo con el enlace a su agenda de Google
+        C->>G: Elige día y hora
+        G-->>A: Aviso de la reserva con la videollamada
+        G-->>C: Confirmación con el enlace de la videollamada
+        A->>C: Videollamada de conocimiento inicial
+        A->>S: Marca la cita como Completada
+        opt Etapa futura
+            S-->>P: Envía los datos del caso
+        end
+    else Usted omite
+        A->>S: Omitir
+        S->>S: Caso Omitido, no se envía agenda
+    end
+</pre>
+    </div>
+  </section>
+
+  <section class="diagram" id="estados-caso">
+    <h2><span class="idx">03</span>Estados del caso</h2>
+    <p>Etiquetas que ve en el panel de potenciales clientes. Cambian cuando usted actúa, salvo las que cambian solas al aprobar u omitir.</p>
+    <div class="panel">
+<pre class="mermaid">
+stateDiagram-v2
+    [*] --> Pendiente: El cliente envía el cuestionario
+    Pendiente --> Revisado: Usted lo lee
+    Pendiente --> Elegible: Aprobar
+    Revisado --> Elegible: Aprobar
+    Pendiente --> Omitido: Omitir
+    Revisado --> Rechazado: No es viable
+    Elegible --> Contactado: Hubo videollamada
+    Contactado --> Convertido: Se vuelve cliente
+    Contactado --> Rechazado: No continúa
+    Omitido --> [*]
+    Rechazado --> [*]
+    Convertido --> [*]
+</pre>
+    </div>
+    <p class="note"><strong>Por decidir:</strong> si "Omitido" es un estado nuevo o se reutiliza "Rechazado". "Convertido" es el punto desde el cual, en una etapa futura, el caso se enviará a PracticePanther.</p>
+  </section>
+
+  <section class="diagram" id="estado-cita">
+    <h2><span class="idx">04</span>Estado de la cita</h2>
+    <p>La cita nace Confirmada en el momento en que usted aprueba y el cliente puede agendar.</p>
+    <div class="panel">
+<pre class="mermaid">
+stateDiagram-v2
+    [*] --> Confirmada: Usted aprueba y libera la agenda
+    Confirmada --> Completada: Se realizó la videollamada
+    Confirmada --> Cancelada: El cliente no reserva, o se cierra el caso
+    Completada --> [*]
+    Cancelada --> [*]
+</pre>
+    </div>
+    <p class="note"><strong>Importante:</strong> "Confirmada" significa "agenda liberada", no "el cliente ya reservó". En esta etapa el sistema no sabe qué día y hora eligió el cliente. Eso lo verá usted en su Google Calendar. Cuando exista la conexión automática con Calendar, el sistema también lo sabrá.</p>
+  </section>
+
+  <section class="diagram" id="imprevistos">
+    <h2><span class="idx">05</span>Imprevistos</h2>
+    <p>Qué pasa cuando algo no sale como en el camino normal.</p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Qué ocurre</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Abre el botón del correo por segunda vez, o está vencido</td><td>La pantalla lo indica y no cambia nada. Cada botón funciona una sola vez.</td></tr>
+          <tr><td>Un antivirus abre el enlace del correo</td><td>Solo se muestra la pantalla de confirmación. No se aprueba ni se omite nada hasta que usted confirme.</td></tr>
+          <tr><td>El cliente no reserva</td><td>No hay recordatorio automático en esta etapa. Usted decide si le da seguimiento o cancela la cita.</td></tr>
+          <tr><td>El cliente reenvía su enlace de agenda</td><td>Quien tenga el enlace podría reservar. Usted verá la reserva en su calendario y puede cancelarla.</td></tr>
+          <tr><td>El cliente ya había escrito antes</td><td>El sistema lo reconoce y en la ficha del caso usted ve su historial.</td></tr>
+          <tr><td>Quiere aprobar sin usar el correo</td><td>Puede hacerlo desde el panel con el botón "Libera Agenda".</td></tr>
+          <tr><td>El caso queda fuera de su jurisdicción</td><td>Lo ve en el correo antes de decidir y puede omitirlo sin abrir su agenda.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p class="draft"><b>Borrador para aprobación</b>Ningún cambio se construye hasta que usted confirme el flujo. <a class="softlink back" href="/"><svg class="chev" viewBox="0 0 9 16" aria-hidden="true"><polygon points="9,0 5.6,0 0,8 5.6,16 9,16 3.4,8"/></svg> volver al flujo paso a paso</a></p>
+    <div class="signbar"><span>www.keylabullon.com</span><span class="wm" role="img" aria-label="Keyla Bullón Zaragoza"></span></div>
+  </footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var explicit = root.getAttribute('data-theme');
+    var dark = explicit ? explicit === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var cs = getComputedStyle(root);
+    function v(n){ return cs.getPropertyValue(n).trim(); }
+    var FONT = '"Poppins", system-ui, sans-serif';
+    mermaid.initialize({
+      startOnLoad: false, theme: 'base', securityLevel: 'loose', fontFamily: FONT,
+      themeVariables: {
+        darkMode: dark, fontFamily: FONT, fontSize: '14px',
+        background: v('--surface'), primaryColor: v('--surface'), primaryTextColor: v('--fg'),
+        primaryBorderColor: v('--strong'), secondaryColor: v('--chip'), tertiaryColor: v('--surface'),
+        lineColor: v('--muted'), textColor: v('--fg'), mainBkg: v('--surface'), nodeBorder: v('--strong'),
+        clusterBkg: v('--surface'), edgeLabelBackground: v('--surface'),
+        actorBkg: v('--solid'), actorBorder: v('--solid'), actorTextColor: v('--solid-ink'), actorLineColor: v('--line-2'),
+        signalColor: v('--fg'), signalTextColor: v('--fg'),
+        labelBoxBkgColor: v('--solid'), labelBoxBorderColor: v('--line-2'), labelTextColor: v('--solid-ink'), loopTextColor: v('--fg'),
+        noteBkgColor: v('--chip'), noteBorderColor: v('--line-2'), noteTextColor: v('--fg'),
+        sequenceNumberColor: v('--solid-ink'), activationBkgColor: v('--chip'), activationBorderColor: v('--strong'),
+        stateLabelColor: v('--fg'), stateBkg: v('--surface'), transitionColor: v('--muted'), transitionLabelColor: v('--muted'),
+        specialStateColor: v('--strong'), innerEndBackground: v('--strong')
+      },
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'linear' },
+      sequence: { useMaxWidth: true, wrap: true }
+    });
+    mermaid.run({ querySelector: 'pre.mermaid' });
+  })();
+</script>
+</body>
+</html>
